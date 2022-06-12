@@ -23,7 +23,6 @@
          data-shape="rectangular"
          data-logo_alignment="left">
       </div>
-      <script src="https://accounts.google.com/gsi/client" async defer></script>
 
       <button id="google_signout">
         Signout
@@ -32,21 +31,25 @@
     
 
 
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 
     <script>
         function handleCredentialResponse(response) {
+           
+            //Google token : ID_TOKEN
+          //console.log('id_token: ',response.credential);
+          //  axios.post('http://localhost:8080/api/auth/google', { id_token: response.credential, })
+          //       .then(resp => console.log(resp.data))
+          //       .catch(error => console.log(error));
 
           const body = { id_token: response.credential }
-          fetch(window.location.hostname.includes('localhost')
-              ? 'http://localhost:8080/api/auth/google'
-              : 'https://restserver-node-hector-sanchez/api/auth/google/',
-              {        
-               method: 'POST',
-               headers: {
-                'Content-Type':'application/json'
-                },
-                body: JSON.stringify(body)
+          fetch('https://restserver-node-hector-sanchez.herokuapp.com/api/auth/google',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+             },
+              body: JSON.stringify(body)
              })
                 .then( r => r.json())
                 .then(resp =>{
@@ -56,6 +59,12 @@
                 .catch( console.warn)
           
         }
+
+
+
+     
+
+
         const button = document.getElementById('google_signout');
         button.onclick = () =>{
 
