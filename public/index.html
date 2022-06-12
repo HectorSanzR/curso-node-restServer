@@ -44,13 +44,12 @@
           //       .catch(error => console.log(error));
 
           const body = { id_token: response.credential }
-          fetch('https://restserver-node-hector-sanchez.herokuapp.com/api/auth/google',{
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-             },
-              body: JSON.stringify(body)
-             })
+          fetch(window.location.hostname.includes('localhost')
+                  ? 'http://localhost:8080/api/auth/google'
+                  : 'https://NombreDeSuAplicacionEnHeroku/api/auth/google',{
+              method: 'POST',
+              headers: {'Content-Type':'application/json'},
+              body: JSON.stringify(body)       })
                 .then( r => r.json())
                 .then(resp =>{
                     console.log(resp)
